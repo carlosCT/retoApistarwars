@@ -1,0 +1,57 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: jcarlos
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: film
+frameworkVersion: "4"
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  stage: ${opt:stage,'test'}
+  timeout: 25
+  memorySize: 512
+  region: us-east-1
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "dynamodb:GetItem"
+        - "dynamodb:PutItem"
+        - "dynamodb:UpdateItem"
+        - "dynamodb:Query"
+      Resource:
+        - "arn:aws:dynamodb:us-east-1:*:table/${self:service}-${self:provider.stage}-actor"
+
+functions:
+  lmb-actor-create:
+    handler: src/film/main.handler
+    name: lmb-${self:provider.stage}-create-actor
+    events:
+      - http:
+          path: v1/create/actor
+          method: post
+    environment:
+      FILM_TABLE: ${self:service}-${self:provider.stage}-actor
+
+  lmb-actor-get:
+    handler: src/film/main.handlerActor
+    name: lmb-${self:provider.stage}-get-actor
+    events:
+      - http:
+          path: v1/get/actor
+          method: get
+
+resources:
+  Resources:
+    UsersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:service}-${self:provider.stage}-actor
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
