@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import axios from 'axios';
 import { Actor } from 'src/film/domain/entities/actor.entity';
-import { uuid } from 'uuidv4';
+import { v4 as uuidv4 } from 'uuid';
 import { IFilmRepository } from '../../domain/repository/film.repository';
 import { CreateActorDto } from '../dto/create-actor.dto';
 import { HttpResult } from 'src/film/domain/result/http.entity';
@@ -15,36 +15,32 @@ export class FilmRepository implements IFilmRepository {
   constructor() {}
   private readonly dynamoClient: DocumentClient = new DocumentClient();
 
-  async getActor(): Promise<{success: boolean, result: HttpResultActor}> {
+  async getActor(): Promise<{ success: boolean; result: HttpResultActor }> {
     this.logger.log('Start execute get Actor', 'FilmRepository - execute');
     try {
-      const API = 'https://swapi.py4e.com/api/people/1/';
+      const API = process.env.FILM_API;
       const result = await axios.get(API);
 
       this.logger.log(`data API result  ${JSON.stringify(result.data)} `);
 
-      // const res = new ActorResponse(result.data);
-
-      this.logger.log("data result of specie by actor");
-      const arraySpecie=[];
-      for(let specie of result.data.species){
+      this.logger.log('data result of specie by actor');
+      const arraySpecie = [];
+      for (let specie of result.data.species) {
         const resultSpecies = await axios.get(specie);
-        arraySpecie.push(resultSpecies.data) 
+        arraySpecie.push(resultSpecies.data);
       }
 
-      result.data.speciesResult=arraySpecie;
-      const arrayVehicles=[];
-      for(let vehicle of result.data.vehicles){
+      result.data.speciesResult = arraySpecie;
+      const arrayVehicles = [];
+      for (let vehicle of result.data.vehicles) {
         const resultVehicles = await axios.get(vehicle);
-        arrayVehicles.push(resultVehicles.data) 
+        arrayVehicles.push(resultVehicles.data);
       }
-      result.data.vehiclesResult=arrayVehicles;
-      // console.log("result of repository  ", result.data);
+      result.data.vehiclesResult = arrayVehicles;
       return {
         success: true,
-        result: result.data
+        result: result.data,
       };
-      
     } catch (error) {
       console.log(error);
       this.logger.error(
@@ -57,7 +53,7 @@ export class FilmRepository implements IFilmRepository {
 
   async saveActor(actor: CreateActorDto): Promise<HttpResult> {
     const actorData = new Actor(
-      uuid(),
+      uuidv4(),
       actor.nombre,
       actor.estatura,
       actor.peso,

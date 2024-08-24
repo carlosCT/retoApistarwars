@@ -1,71 +1,22 @@
-import { Callback, Context } from 'aws-lambda';
-import { NestFactory } from '@nestjs/core';
-import { FilmModule } from './infraestructure/film.module';
-import { FilmController } from './infraestructure/film.controller';
+import { NestFactory } from "@nestjs/core";
+import { FilmModule } from "./infraestructure/film.module";
+import { writeFileSync } from "fs";
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
-module.exports.handler = async (
-  event: any,
-  context: Context,
-  callback: Callback,
-) => {
-  const appContext = await NestFactory.createApplicationContext(FilmModule);
-  const eventsService = appContext.get(FilmController);
-  try {
-     const result = await eventsService.executeCreateActor(event);
-    return {
-      statusCode: 200,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        success: true,
-        message: result
-      }),
-    }
-  } catch (error) {
-    return {
-      statusCode: error?.statusCode ?? 400,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        success: false,
-        message: error?.message ?? 'Error no controlado'
-      }),
-    }
-  }
+
+async function bootstrap() {
+  const app = await NestFactory.create(FilmModule);
+
+  const options = new DocumentBuilder()
+    .setTitle('Film example')
+    .setDescription('The Film API description')
+    .setVersion('1.0')
+    .addTag('film')
+    .build();
+  const document = SwaggerModule.createDocument(app, options);
+  const outputPath = "./swagger.json"
+  writeFileSync(outputPath, JSON.stringify(document), { encoding: 'utf8'});
+
+  await app.close();
 }
-
-
-module.exports.handlerActor = async (
-  event: any,
-  context: Context,
-  callback: Callback,
-) => {
-  const appContext = await NestFactory.createApplicationContext(FilmModule);
-  const eventsService = appContext.get(FilmController);
-  try {
-     const result = await eventsService.getActor(event);
-    return {
-      statusCode: 200,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        success: true,
-        message: result
-      }),
-    }
-  } catch (error) {
-    return {
-      statusCode: error?.statusCode ?? 400,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        success: false,
-        message: error?.message ?? 'Error no controlado'
-      }),
-    }
-  }
-}
+bootstrap();

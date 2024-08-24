@@ -1,0 +1,69 @@
+{
+	"info": {
+		"_postman_id": "5d3b74c6-9391-48a6-be70-4c9208e07fdd",
+		"name": "softtech",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1868512"
+	},
+	"item": [
+		{
+			"name": "https://yht9e4c0ah.execute-api.us-east-1.amazonaws.com/test/v1/get/actor",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://yht9e4c0ah.execute-api.us-east-1.amazonaws.com/test/v1/get/actor",
+					"protocol": "https",
+					"host": [
+						"yht9e4c0ah",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"test",
+						"v1",
+						"get",
+						"actor"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://yht9e4c0ah.execute-api.us-east-1.amazonaws.com/test/v1/create/actor",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Juan carlos\",\r\n    \"estatura\": \"170\",\r\n    \"peso\": \"79\",\r\n    \"colorCabello\": \"negro\",\r\n    \"colorPiel\": \"mestizo\",\r\n    \"colorOjos\": \"negro\",\r\n    \"fechaCumpleanhos\": \"1908\",\r\n    \"genero\": \"M\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://yht9e4c0ah.execute-api.us-east-1.amazonaws.com/test/v1/create/actor",
+					"protocol": "https",
+					"host": [
+						"yht9e4c0ah",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"test",
+						"v1",
+						"create",
+						"actor"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

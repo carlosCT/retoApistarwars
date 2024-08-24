@@ -203,9 +203,9 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/film/test/1724446928851-2024-08-23T21:02:08.851Z/film.zip"
+                "S3Key": "serverless/film/test/1724475865615-2024-08-24T05:04:25.615Z/film.zip"
               },
-              "Handler": "src/film/main.handler",
+              "Handler": "src/film/main2.handler",
               "Runtime": "nodejs20.x",
               "FunctionName": "lmb-test-create-actor",
               "MemorySize": 512,
@@ -234,15 +234,16 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/film/test/1724446928851-2024-08-23T21:02:08.851Z/film.zip"
+                "S3Key": "serverless/film/test/1724475865615-2024-08-24T05:04:25.615Z/film.zip"
               },
-              "Handler": "src/film/main.handlerActor",
+              "Handler": "src/film/main2.handlerActor",
               "Runtime": "nodejs20.x",
               "FunctionName": "lmb-test-get-actor",
               "MemorySize": 512,
               "Timeout": 25,
               "Environment": {
                 "Variables": {
+                  "FILM_API": "https://swapi.py4e.com/api/people/1/",
                   "NODE_OPTIONS": "--enable-source-maps"
                 }
               },
@@ -257,24 +258,24 @@
               "LmbDashactorDashgetLogGroup"
             ]
           },
-          "LmbDashactorDashcreateLambdaVersion3NbBCOOOuzbeihKO3SifB12DCuyX7xpHIrqlm2oUt5E": {
+          "LmbDashactorDashcreateLambdaVersionq2GYbQtzCJe5CDTmMFYRnV9uGXo4RC9Q7waJKMND7CA": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "LmbDashactorDashcreateLambdaFunction"
               },
-              "CodeSha256": "q/KWPVZ3BAmL5+oeN/z/xacatFcpDFzIINZw62Dx0p0="
+              "CodeSha256": "vsGe5ezt97RtpyZ7V634snQMJ/3ky05eWJ2HQ70zwKw="
             }
           },
-          "LmbDashactorDashgetLambdaVersionBXvrLe2bB1ExehoupyiUNW0fGnIsDSArdtVCY": {
+          "LmbDashactorDashgetLambdaVersionOibCoWQmfnzXlUTAGkhvH7d9eC2HErWSEvGWiFuE": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "LmbDashactorDashgetLambdaFunction"
               },
-              "CodeSha256": "q/KWPVZ3BAmL5+oeN/z/xacatFcpDFzIINZw62Dx0p0="
+              "CodeSha256": "vsGe5ezt97RtpyZ7V634snQMJ/3ky05eWJ2HQ70zwKw="
             }
           },
           "ApiGatewayRestApi": {
@@ -444,7 +445,7 @@
               "LmbDashactorDashgetLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayDeployment1724446926826": {
+          "ApiGatewayDeployment1724475863474": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -566,7 +567,7 @@
           "LmbDashactorDashcreateLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "LmbDashactorDashcreateLambdaVersion3NbBCOOOuzbeihKO3SifB12DCuyX7xpHIrqlm2oUt5E"
+              "Ref": "LmbDashactorDashcreateLambdaVersionq2GYbQtzCJe5CDTmMFYRnV9uGXo4RC9Q7waJKMND7CA"
             },
             "Export": {
               "Name": "sls-film-test-LmbDashactorDashcreateLambdaFunctionQualifiedArn"
@@ -575,7 +576,7 @@
           "LmbDashactorDashgetLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "LmbDashactorDashgetLambdaVersionBXvrLe2bB1ExehoupyiUNW0fGnIsDSArdtVCY"
+              "Ref": "LmbDashactorDashgetLambdaVersionOibCoWQmfnzXlUTAGkhvH7d9eC2HErWSEvGWiFuE"
             },
             "Export": {
               "Name": "sls-film-test-LmbDashactorDashgetLambdaFunctionQualifiedArn"
@@ -693,10 +694,13 @@
       },
       "vpc": {}
     },
+    "custom": {
+      "api_starwar": "https://swapi.py4e.com/api/people/1/"
+    },
     "pluginsData": {},
     "functions": {
       "lmb-actor-create": {
-        "handler": "src/film/main.handler",
+        "handler": "src/film/main2.handler",
         "name": "lmb-test-create-actor",
         "events": [
           {
@@ -716,10 +720,10 @@
         "timeout": 25,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "LmbDashactorDashcreateLambdaVersion3NbBCOOOuzbeihKO3SifB12DCuyX7xpHIrqlm2oUt5E"
+        "versionLogicalId": "LmbDashactorDashcreateLambdaVersionq2GYbQtzCJe5CDTmMFYRnV9uGXo4RC9Q7waJKMND7CA"
       },
       "lmb-actor-get": {
-        "handler": "src/film/main.handlerActor",
+        "handler": "src/film/main2.handlerActor",
         "name": "lmb-test-get-actor",
         "events": [
           {
@@ -731,6 +735,7 @@
           }
         ],
         "environment": {
+          "FILM_API": "https://swapi.py4e.com/api/people/1/",
           "NODE_OPTIONS": "--enable-source-maps"
         },
         "package": {},
@@ -738,7 +743,7 @@
         "timeout": 25,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "LmbDashactorDashgetLambdaVersionBXvrLe2bB1ExehoupyiUNW0fGnIsDSArdtVCY"
+        "versionLogicalId": "LmbDashactorDashgetLambdaVersionOibCoWQmfnzXlUTAGkhvH7d9eC2HErWSEvGWiFuE"
       }
     },
     "resources": {
@@ -774,6 +779,9 @@
       "org": "jcarlos",
       "service": "film",
       "frameworkVersion": "4",
+      "custom": {
+        "$ref": "$[\"service\"][\"custom\"]"
+      },
       "provider": {
         "$ref": "$[\"service\"][\"provider\"]"
       },
@@ -790,7 +798,7 @@
     "layers": {}
   },
   "package": {
-    "artifactDirectoryName": "serverless/film/test/1724446928851-2024-08-23T21:02:08.851Z",
+    "artifactDirectoryName": "serverless/film/test/1724475865615-2024-08-24T05:04:25.615Z",
     "artifact": "film.zip"
   }
 }

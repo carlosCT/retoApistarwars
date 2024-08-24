@@ -11,7 +11,8 @@ import { ConfigModule } from '@nestjs/config';
     HttpModule,
     ConfigModule.forRoot({
       envFilePath: ['.env'],
-    })
+    }),
+    
   ],
   controllers: [FilmController],
   providers: [

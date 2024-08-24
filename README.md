@@ -26,11 +26,15 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
+
 ## Installation
 
 ```bash
 $ npm install
 ```
+
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
 
 ## Running the app
 
@@ -71,3 +75,21 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+
+
+## Documentation
+
+Documentarion is available in file swagger.json
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
+
+https://app.swaggerhub.com/apis/JCARLOSCOND/film-crud-reto/1.0
+
+
+## deployment
+
+```bash
+# development
+$ sls deploy --stage desa
+
+```

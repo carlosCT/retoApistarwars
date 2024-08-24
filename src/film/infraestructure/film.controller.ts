@@ -9,20 +9,21 @@ import {
   Post,
 } from '@nestjs/common';
 import { FilmService } from '../application/film.service';
-import { CreateActorDto } from './dto/create-actor.dto';
 import { HttpError } from '../domain/exceptions/payment.exception';
+import { CreateActorDto } from './dto/create-actor.dto';
 
-@Controller('payment')
+
+@Controller()
 export class FilmController {
-
   private readonly logger = new Logger('FilmController');
 
   constructor(
     @Inject('FilmService') private readonly filmService: FilmService,
   ) {}
 
-  @Post()
+  @Post('v1/create/actor')
   async executeCreateActor(@Body() request: CreateActorDto) {
+    
     this.logger.log('Start to create actor');
     this.logger.log(
       `Payload: ${JSON.stringify(request)}`,
@@ -46,9 +47,8 @@ export class FilmController {
     }
   }
 
-
-  @Get()
-  async getActor(@Body() request: CreateActorDto) {
+  @Get('v1/get/actor')
+  async getActor() {
     try {
       const result = await this.filmService.getActor();
       return result;
@@ -59,7 +59,6 @@ export class FilmController {
           'FilmController - getActor',
         );
 
-        
         throw new HttpException(
           'Process to get actor have a error',
           HttpStatus.SERVICE_UNAVAILABLE,

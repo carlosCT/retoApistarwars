@@ -4,6 +4,11 @@ org: jcarlos
 service: film
 frameworkVersion: "4"
 
+
+custom:
+  api_starwar: "https://swapi.py4e.com/api/people/1/"
+
+
 provider:
   name: aws
   runtime: nodejs20.x
@@ -23,7 +28,7 @@ provider:
 
 functions:
   lmb-actor-create:
-    handler: src/film/main.handler
+    handler: src/film/main2.handler
     name: lmb-${self:provider.stage}-create-actor
     events:
       - http:
@@ -33,12 +38,14 @@ functions:
       FILM_TABLE: ${self:service}-${self:provider.stage}-actor
 
   lmb-actor-get:
-    handler: src/film/main.handlerActor
+    handler: src/film/main2.handlerActor
     name: lmb-${self:provider.stage}-get-actor
     events:
       - http:
           path: v1/get/actor
           method: get
+    environment:
+      FILM_API: ${self:custom.api_starwar}
 
 resources:
   Resources:

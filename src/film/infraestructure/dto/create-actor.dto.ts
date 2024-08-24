@@ -1,11 +1,17 @@
-export class CreateActorDto {
+import {JoiSchema } from 'nestjs-joi';
+import * as Joi from 'joi';
 
-   nombre: string;
-   estatura: string;
-   peso: string;
-   colorCabello: string;
-   colorPiel: string;
-   colorOjos: string;
-   fechaCumpleanhos: string;
-   genero: string;
+export class CreateActorDto {
+   nombre: string | null;
+   estatura: string | null;
+   peso: string | null;
+   colorCabello: string | null;
+   colorPiel: string | null;
+   colorOjos: string | null;
+   fechaCumpleanhos: string | null;
+   genero: string | null ;
 }
+
+
+
+
